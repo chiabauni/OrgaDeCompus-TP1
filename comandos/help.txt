@@ -1,0 +1,15 @@
+Comandos:
+Uso:
+ejecutable -h
+ejecutable -V
+ejecutable -i in_file -o out_file
+
+Opciones:
+-V, --version Imprime la version del programa y finaliza la ejecucion.
+-h, --help Muestra esto por pantalla y finaliza la ejecucion.
+-i, --input Especifica la ruta para el archivo de entrada, por default se usa stdin.
+-o, --output Especifica la ruta para el archivo de salida, por default se usa stdout.
+
+Ejemplos:
+ejecutable < in.txt > out.txt
+cat in.txt | ejecutable -i - > out.txt
