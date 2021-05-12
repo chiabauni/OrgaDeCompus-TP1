@@ -24,7 +24,11 @@
 #define RUTA_AYUDA "comandos/help.txt"
 #define RUTA_VERSION "comandos/version.txt"
 
-#define MENSAJE_COMANDO_INVALIDO "\n El comando usado es invalido, use -h para ayuda."
-#define MENSAJE_GCD_ERROR "\n No se pudo obtener el maximo comun divisor, ocurrio un error."
+#define MENSAJE_COMANDO_INVALIDO_ERROR "\n El comando usado es invalido, use -h para ayuda.\n"
+#define MENSAJE_GCD_ERROR "\n No se pudo obtener el maximo comun divisor, ocurrio un error.\n"
+#define MENSAJE_MEM_DINAMICA_ERROR "\n Problema asignando memoria dinamica.\n"
+#define MENSAJE_INPUT_ERROR "\nLa cantidad de numeros ingresada es invalida. Solo se pueden ingresar 2 numeros por cada calculo de GCD.\n"
+#define MENSAJE_CONVERTIR_CHAR_ERROR "\nError a la hora de convertir la linea de caracteres.\n"
+#define MENSAJE_LINEA_INVALIDA_ERROR "\nProblema leyendo el archivo.\n"
 
 #endif //UTILS_H
