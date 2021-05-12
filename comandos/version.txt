@@ -4,6 +4,7 @@ Entrega 1
 
 Integrantes
 Chiara Bauni 102981
+Lautaro Stroia 100901
+Manuel Bilbao 102732
 
-
-Codigo disponible en : 
+Codigo disponible en : https://github.com/chiabauni/OrgaDeCompus-TP1

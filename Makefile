@@ -4,7 +4,7 @@ all: regressions
 	:
 
 regressions: regressions.c gcd.c gcd.S
-	$(CC) $(CFLAGS) -o regressions main.c max_divisor.c regressions.c gcd.c 
+	$(CC) $(CFLAGS) -o regressions regressions.c gcd.c gcd.S
 
 test: regressions
 	./regressions
