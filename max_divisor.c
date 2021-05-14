@@ -135,11 +135,9 @@ int pasar_a_enteros(char* linea, int largo_linea, int *enteros) {
 void imprimir_salida(struct gcd *gcd, size_t largo, FILE* salida) {
 	if(largo == 0) return;
 
-	for (int i = 0; i < largo; i++) {
+	for (int i = 0; i < (largo-1); i++) {
 		fprintf(salida, "GCD(%i, %i) = %i \n", gcd[i].num_a, gcd[i].num_b, gcd[i].gcd_ab);
 	}
-
-	fprintf(salida,"\n");
 }
 
 bool es_fin_de_linea(char caracter) {
@@ -147,7 +145,7 @@ bool es_fin_de_linea(char caracter) {
 }
 
 bool es_numerico(char caracter) {
-	return((caracter >= '0' && caracter <= '9')); // Habria que considerar si ponen numeros positivos o negativos e ignorar el signo??????? 
+	return((caracter >= '0' && caracter <= '9') || caracter=='-'||caracter=='+');
 }
 
 bool es_caracter_invalido(char caracter) {
