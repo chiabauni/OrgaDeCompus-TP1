@@ -32,7 +32,7 @@ abs_num_a:
 	addu	s0, t0, t1		# s0 = t0 + t1 = gcd + 12*k = &(gcd[k])
 
 	lw		t0, 0(s0)		# t0 = mem(s0) = *(&gcd[k]) = gcd[k].num_a
-	
+
 	# ABS(gcd[k].num_a)
 	bgez	t0, abs_num_b	# if gcd[k].num_a >= 0 GOTO abs_num_b
 
@@ -55,7 +55,7 @@ llamada_euclides_: # Llamada a euclides_ y ++k
 	jal		euclides_
 
 	# Guarda el resultado en memoria
-	sw		v0, 8(s0)		# gcd[k].gcd_ab = v0 
+	sw		v0, 8(s0)		# gcd[k].gcd_ab = v0
 
 	# Incrementa k
 	lw		t0, 16(fp)		# t0 = k
@@ -67,7 +67,7 @@ condicion_for: # (k < n)
 	lw		t0, 40(fp)		# t0 = n
 	sltu	t0, t1, t0		# t0 = (k < n) ? 1 : 0
 	bne		t0, zero, abs_num_a	# if (t0 != 0) GOTO abs_num_a
-								# if (k < n) GOTO abs_num_a
+								# If (k < n) GOTO abs_num_a
 
 	# Termina euclides
 	move	sp, fp			# Recupera los registros que se guardaron
@@ -79,7 +79,7 @@ condicion_for: # (k < n)
 	jr		ra				# Vuelve al caller
 
 	.end euclides
-	
+
 
 	.align 2
 	.ent euclides_
@@ -88,13 +88,13 @@ euclides_:
 	subu	sp, sp, 20
 
 	.cprestore 16			# Se guardan los registros segun ABI
-	sw		fp, 12(sp)		
+	sw		fp, 12(sp)
 	move	fp, sp
 
 
 	sw		a0, 20(fp)		# Guarda los parametros (a, b) en memoria
 	sw		a1, 24(fp)
-	
+
 	# r2 = MAX(a, b)
 	move	t0, a1			# t0 = b
 	move	t1, a0			# t1 = a
@@ -102,7 +102,7 @@ euclides_:
 							# t2 = (a < b) ? 1 : 0
 
 	movz	t0, t1, t2		# if (t2 = 0) => t0 = t1
-							# if (a >= b) => t0 = a
+							# If (a >= b) => t0 = a
 	sw		t0, 0(fp)		# mem(fp+0) = t0 (Guarda r2)
 
 
@@ -132,7 +132,7 @@ while:
 
 retorno_euclides_:
 	lw		v0, 4(fp)		# v0 = r1 (return r1)
-	
+
 	move	sp, fp			# Recupera los registros guardados
 	lw		fp, 12(sp)
 	addiu	sp, sp, 20
