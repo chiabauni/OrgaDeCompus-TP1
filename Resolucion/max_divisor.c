@@ -45,13 +45,9 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
                 return ERROR;
             }
 
-			/*if((enteros[0] == NULL) || (enteros[1] == NULL)){
-				perror(MENSAJE_CONVERTIR_CHAR_ERROR);
-				return ERROR;
-			}*/
             arreglo_structs[largo_arreglo].num_a = enteros[0];
             arreglo_structs[largo_arreglo].num_b = enteros[1];
-            arreglo_structs[largo_arreglo].gcd_ab = 0; //NULL??
+            arreglo_structs[largo_arreglo].gcd_ab = 0; 
             largo_arreglo += 1;
 		}
 	}

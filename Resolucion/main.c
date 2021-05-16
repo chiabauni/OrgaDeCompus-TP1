@@ -70,7 +70,6 @@ int main(int argc, char** argv){
     if(stream_salida == NULL ) stream_salida = stdout;
 
 	flag_divisor = procesar_archivos(stream_entrada, stream_salida);
-	//fprintf(stream_salida, "%s", "Aca se tiene que imprimir el maximo comun divisor");
 
 	if(stream_salida != stdout) fclose(stream_salida);
 	if(stream_entrada != stdin ) fclose(stream_entrada);
