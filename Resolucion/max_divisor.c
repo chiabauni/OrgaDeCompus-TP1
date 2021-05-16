@@ -50,6 +50,7 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
             arreglo_structs[largo_arreglo].gcd_ab = 0; 
             largo_arreglo += 1;
 		}
+		free(linea);
 	}
 
 	if(lectura == ERROR_LINEA_INVALIDA) return ERROR;
@@ -57,7 +58,6 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
     euclides(arreglo_structs, largo_arreglo);
     imprimir_salida(arreglo_structs, largo_arreglo, salida);
     free(arreglo_structs);
-    free(linea);
 	return EXITO; 
 }
 
