@@ -5,6 +5,8 @@
 #define ERROR_DE_MEMORIA -2 
 #define ERROR_DE_INPUT -3
 
+#define SEPARADOR ' '
+
 int procesar_archivos(FILE* entrada, FILE* salida) {
 
 	int lectura = 0;
@@ -71,6 +73,9 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea){
 
 	(*largo_linea) = 0;
 	int caracter = 1; // Un valor trivial
+	bool primer_numero_leido = false;
+	bool separador_leido = false;
+	bool segundo_numero_leido = false;
 
 	while ( (caracter != EOL ) && (caracter != EOF) ) {
 
@@ -82,17 +87,25 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea){
 			}
     	}
 
+    	caracter = getc(stream); // Leo un caracter del stream.
     	if( ferror(stream) ){
     		perror(MENSAJE_LINEA_INVALIDA_ERROR);
     		return ERROR_LINEA_INVALIDA;
     	}
 
-    	caracter = getc(stream); // Leo un caracter del stream.
+		primer_numero_leido |= (!primer_numero_leido && es_numerico(caracter));
+		separador_leido |= (!separador_leido && caracter == SEPARADOR);
+		segundo_numero_leido |= (!segundo_numero_leido && separador_leido && es_numerico(caracter));
+
     	if( es_caracter_invalido(caracter) ){
     		 return ERROR_LINEA_INVALIDA; // Si lee un caracter que no corresponde, devuelve linea invalida.	
     	}
     	(*linea) [ (*largo_linea) ] = (char) caracter; //Lo guardo en el linea.
     	(*largo_linea)+=1; // Incremento mi tope.
+	}
+
+	if (!primer_numero_leido || !separador_leido || !segundo_numero_leido) {
+		return ERROR_LINEA_INVALIDA;
 	}
 
 	if(caracter == EOF || (*largo_linea) <=1){ // Siempre va a leer por lo menos un caracter, sea eof o fin de linea
@@ -118,7 +131,7 @@ int pasar_a_enteros(char* linea, int largo_linea, int *enteros) {
             return ERROR_DE_INPUT;
         } else if(es_numerico(caracter)) {
 			temporal[j] = caracter; j++;	
-		} else if((caracter =' ' || es_fin_de_linea(caracter)) && j!=0) {
+		} else if((caracter ==SEPARADOR || es_fin_de_linea(caracter)) && j!=0) {
 			temporal[j] = '\0';
 			enteros[largo_enteros] = atoi(temporal);
 			largo_enteros += 1;
@@ -145,5 +158,5 @@ bool es_numerico(char caracter) {
 }
 
 bool es_caracter_invalido(char caracter) {
-	return !(es_numerico(caracter) || es_fin_de_linea(caracter) || caracter ==' ');
+	return !(es_numerico(caracter) || es_fin_de_linea(caracter) || caracter ==SEPARADOR);
 }
