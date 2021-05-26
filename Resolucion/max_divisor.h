@@ -39,7 +39,7 @@ int pasar_a_enteros(char* linea, int largo_linea, int *enteros);
 Pre : Recibe un array de enteros, su largo y un stream de salida.
 Pos:  "Imprime" dicho array en el stream.
 */
-void imprimir_salida(struct gcd *gcd, size_t n, FILE* salida);
+int imprimir_salida(struct gcd *gcd, size_t n, FILE* salida);
 
 /*
 Pre: Recibe un caracter.

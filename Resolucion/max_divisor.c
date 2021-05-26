@@ -19,6 +19,7 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 	struct gcd* arreglo_structs = malloc(sizeof(struct gcd) * largo_buffer);
     if((arreglo_structs) == NULL){
         perror(MENSAJE_MEM_DINAMICA_ERROR);
+		free(arreglo_structs);
 		return ERROR_DE_MEMORIA;
 	}
 
@@ -30,6 +31,7 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
       		
             if((arreglo_structs) == NULL){
                 perror(MENSAJE_MEM_DINAMICA_ERROR);
+				free(arreglo_structs);
 				return ERROR_DE_MEMORIA;
 			}
     	}
@@ -38,13 +40,17 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 
 		if(lectura == ERROR_DE_INPUT) {
 			perror(MENSAJE_INPUT_ERROR);
+			free(arreglo_structs);
+			free(linea);
 			return ERROR;
 		}
 		
 		if(lectura != ERROR_LINEA_INVALIDA) {
 
 			if(pasar_a_enteros(linea, largo_linea, enteros)) {
-                return ERROR;
+                free(arreglo_structs);
+				free(linea);
+				return ERROR;
             }
 
             arreglo_structs[largo_arreglo].num_a = enteros[0];
@@ -55,10 +61,16 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 		free(linea);
 	}
 
-	if(lectura == ERROR_LINEA_INVALIDA) return ERROR;
+	if(lectura == ERROR_LINEA_INVALIDA){
+		free(arreglo_structs);
+		return ERROR;
+	}
     
     euclides(arreglo_structs, largo_arreglo);
-    imprimir_salida(arreglo_structs, largo_arreglo, salida);
+    if(imprimir_salida(arreglo_structs, largo_arreglo, salida)){
+		perror(MENSAJE_IMPRIMIR_SALIDA_ERROR);
+    	return ERROR;
+	}
     free(arreglo_structs);
 	return EXITO; 
 }
@@ -141,16 +153,16 @@ int pasar_a_enteros(char* linea, int largo_linea, int *enteros) {
     return 0;
 }
 
-void imprimir_salida(struct gcd *gcd, size_t largo, FILE* salida) {
-	if(largo == 0) return;
+int imprimir_salida(struct gcd *gcd, size_t largo, FILE* salida) {
+	if(largo == 0) return 0;
 
 	for (int i = 0; i < (largo-1); i++) {
 		fprintf(salida, "GCD(%i, %i) = %i \n", gcd[i].num_a, gcd[i].num_b, gcd[i].gcd_ab);
 		if(ferror(salida) ){
-    		perror(MENSAJE_IMPRIMIR_SALIDA_ERROR);
-    		return ERROR;
+    		return 1;
     	}
 	}
+	return 0;
 }
 
 bool es_fin_de_linea(char caracter) {
