@@ -7,7 +7,7 @@ main: main.c max_divisor.c gcd.S
 	$(CC) $(CFLAGS) -o main main.c max_divisor.c gcd.S
 
 test: main
-	./main -i tests/input.txt -o -
+	./main -i tests/input_success.txt -o -
 
 clean:
 	rm -f main

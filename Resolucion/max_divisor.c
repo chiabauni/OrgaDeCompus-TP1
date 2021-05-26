@@ -93,9 +93,9 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea){
     		return ERROR_LINEA_INVALIDA;
     	}
 
-		primer_numero_leido |= (!primer_numero_leido && es_numerico(caracter));
-		separador_leido |= (!separador_leido && caracter == SEPARADOR);
-		segundo_numero_leido |= (!segundo_numero_leido && separador_leido && es_numerico(caracter));
+		primer_numero_leido |= (es_numerico(caracter));
+		separador_leido |= (primer_numero_leido && caracter == SEPARADOR);
+		segundo_numero_leido |= (separador_leido && es_numerico(caracter));
 
     	if( es_caracter_invalido(caracter) ){
     		 return ERROR_LINEA_INVALIDA; // Si lee un caracter que no corresponde, devuelve linea invalida.	
@@ -104,7 +104,7 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea){
     	(*largo_linea)+=1; // Incremento mi tope.
 	}
 
-	if (!primer_numero_leido || !separador_leido || !segundo_numero_leido) {
+	if ((!primer_numero_leido || !separador_leido || !segundo_numero_leido) && caracter != EOF) {
 		return ERROR_LINEA_INVALIDA;
 	}
 
