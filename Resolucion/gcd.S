@@ -140,6 +140,8 @@ while:
 	lw		t0, OFF_R1(fp)			# t0 = r1
 
 	# If ((r0 = r2 % r1) == 0)
+	# Para obtener r2 % r1 realizo la division y obtengo el resto del
+	# registro high del accumulator
 	divu	t1, t0					# r2 / r1
 	mfhi	t2						# t2 = r0 = r2 % r1
 	sw		t2, OFF_R0(fp)			# mem(fp+OFF_R0) = t2 (Guarda r0)
