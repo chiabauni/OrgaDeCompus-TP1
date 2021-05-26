@@ -104,7 +104,7 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea){
     	(*largo_linea)+=1; // Incremento mi tope.
 	}
 
-	if ((!primer_numero_leido || !separador_leido || !segundo_numero_leido) && caracter != EOF) {
+	if (!(primer_numero_leido && separador_leido && segundo_numero_leido) && (*largo_linea) > 1) {
 		return ERROR_LINEA_INVALIDA;
 	}
 
