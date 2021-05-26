@@ -146,6 +146,10 @@ void imprimir_salida(struct gcd *gcd, size_t largo, FILE* salida) {
 
 	for (int i = 0; i < (largo-1); i++) {
 		fprintf(salida, "GCD(%i, %i) = %i \n", gcd[i].num_a, gcd[i].num_b, gcd[i].gcd_ab);
+		if(ferror(salida) ){
+    		perror(MENSAJE_IMPRIMIR_SALIDA_ERROR);
+    		return ERROR;
+    	}
 	}
 }
 

@@ -30,5 +30,6 @@
 #define MENSAJE_INPUT_ERROR "\nLa cantidad de numeros ingresada es invalida. Solo se pueden ingresar 2 numeros por cada calculo de GCD.\n"
 #define MENSAJE_CONVERTIR_CHAR_ERROR "\nError a la hora de convertir la linea de caracteres.\n"
 #define MENSAJE_LINEA_INVALIDA_ERROR "\nProblema leyendo el archivo.\n"
+#define MENSAJE_IMPRIMIR_SALIDA_ERROR "\nProblema al imprimir la salida.\n"
 
 #endif //UTILS_H
