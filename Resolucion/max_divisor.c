@@ -89,7 +89,7 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 	int largo_buffer = 20;
 	*linea = (char*) malloc(sizeof(char) * largo_buffer); // Asigno un lugar en memoria para el linea.
 
-	if( (*linea) == NULL) {
+	if((*linea) == NULL) {
 		return ERROR_DE_MEMORIA;
 	}
 
