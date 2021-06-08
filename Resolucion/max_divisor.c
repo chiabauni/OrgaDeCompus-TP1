@@ -27,9 +27,9 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 		if((largo_arreglo) == (largo_buffer-1)) { // Tengo que agrandar mi memoria.
 
 			largo_buffer += 10; //Voy agregando de a 10 lugares. 
-			arreglo_structs = realloc(arreglo_structs, sizeof(struct gcd) * largo_buffer); // Re ubico en la memoria.
+			struct gcd* arreglo_nuevo = realloc(arreglo_structs, sizeof(struct gcd) * largo_buffer); // Re ubico en la memoria.
 
-			if((arreglo_structs) == NULL) {
+			if(arreglo_nuevo == NULL) {
 				perror(MENSAJE_MEM_DINAMICA_ERROR);
 				free(arreglo_structs);
 				return ERROR_DE_MEMORIA;
@@ -103,8 +103,8 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 
 		if((*largo_linea) == (largo_buffer-1)) { // Tengo que agrandar mi memoria.
 			largo_buffer +=10; // Voy agregando de a 10 lugares. 
-			(*linea) = (char*) realloc((*linea), sizeof(char) * largo_buffer); // Re ubico en la memoria.
-			if( (*linea) == NULL) {
+			char* linea_nueva = realloc((*linea), sizeof(char) * largo_buffer); // Re ubico en la memoria.
+			if(linea_nueva == NULL) {
 				return ERROR_DE_MEMORIA;
 			}
 		}
