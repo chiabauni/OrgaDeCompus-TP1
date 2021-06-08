@@ -89,7 +89,7 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 	int largo_buffer = 20;
 	*linea = (char*) malloc(sizeof(char) * largo_buffer); // Asigno un lugar en memoria para el linea.
 
-	if((*linea) == NULL) {
+	if( (*linea) == NULL) {
 		return ERROR_DE_MEMORIA;
 	}
 
@@ -105,8 +105,8 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 			largo_buffer +=10; // Voy agregando de a 10 lugares. 
 			(*linea) = (char*) realloc((*linea), sizeof(char) * largo_buffer); // Re ubico en la memoria.
 	      		if( (*linea) == NULL) {
-					return ERROR_DE_MEMORIA;
-				}
+				return ERROR_DE_MEMORIA;
+			}
 	    	}
 
 	    	caracter = getc(stream); // Leo un caracter del stream.
@@ -114,12 +114,12 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 	    		return ERROR_LINEA_INVALIDA;
 	    	}
 
-			primer_numero_leido |= (es_numerico(caracter));
-			separador_leido |= (primer_numero_leido && caracter == SEPARADOR);
-			segundo_numero_leido |= (separador_leido && es_numerico(caracter));
+		primer_numero_leido |= (es_numerico(caracter));
+		separador_leido |= (primer_numero_leido && caracter == SEPARADOR);
+		segundo_numero_leido |= (separador_leido && es_numerico(caracter));
 
 	    	if(es_caracter_invalido(caracter)) {
-				return ERROR_LINEA_INVALIDA; // Si lee un caracter que no corresponde, devuelve linea invalida.	
+			return ERROR_LINEA_INVALIDA; // Si lee un caracter que no corresponde, devuelve linea invalida.	
 	    	}
 	    	(*linea) [ (*largo_linea) ] = (char) caracter; //Lo guardo en el linea.
 	    	(*largo_linea)+=1; // Incremento mi tope.
@@ -148,10 +148,10 @@ int pasar_a_enteros(char* linea, int largo_linea, int *enteros) {
 
 	while(i < largo_linea) {
 		caracter = linea[i]; i++;
-        if(largo_enteros >= 2) {
-            perror(MENSAJE_INPUT_ERROR);
-            return ERROR_DE_INPUT;
-        } else if(es_numerico(caracter)) {
+		if(largo_enteros >= 2) {
+			perror(MENSAJE_INPUT_ERROR);
+			return ERROR_DE_INPUT;
+		} else if(es_numerico(caracter)) {
 			temporal[j] = caracter; j++;	
 		} else if((caracter ==SEPARADOR || es_fin_de_linea(caracter)) && j!=0) {
 			temporal[j] = '\0';
@@ -168,8 +168,8 @@ int imprimir_salida(struct gcd *gcd, size_t largo, FILE* salida) {
 	for (int i = 0; i <= (largo-1); i++) {
 		fprintf(salida, "GCD(%i, %i) = %i \n", gcd[i].num_a, gcd[i].num_b, gcd[i].gcd_ab);
 		if(ferror(salida)) {
-    		return 1;
-    	}
+			return 1;
+		}
 	}
 	return 0;
 }
