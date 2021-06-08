@@ -1,6 +1,8 @@
 #include "max_divisor.h"
 
+#define LECTURA_CORRECTA 0
 #define FIN_DE_ARCHIVO 1 
+#define LINEA_VACIA 2 
 #define ERROR_LINEA_INVALIDA -1
 #define ERROR_DE_MEMORIA -2 
 #define ERROR_DE_INPUT -3
@@ -23,13 +25,13 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 		return ERROR_DE_MEMORIA;
 	}
 
-	while(lectura == 0) {
+	while(lectura == LECTURA_CORRECTA || lectura == LINEA_VACIA) {
 		if((largo_arreglo) == (largo_buffer-1)) { // Tengo que agrandar mi memoria.
 
 			largo_buffer += 10; //Voy agregando de a 10 lugares. 
-			arreglo_structs = realloc(arreglo_structs, sizeof(struct gcd) * largo_buffer); // Re ubico en la memoria.
+			struct gcd* arreglo_nuevo = realloc(arreglo_structs, sizeof(struct gcd) * largo_buffer); // Re ubico en la memoria.
 
-			if((arreglo_structs) == NULL) {
+			if(arreglo_nuevo == NULL) {
 				perror(MENSAJE_MEM_DINAMICA_ERROR);
 				free(arreglo_structs);
 				return ERROR_DE_MEMORIA;
@@ -44,8 +46,8 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 			free(linea);
 			return ERROR_DE_MEMORIA;
 		}
-		
-		if(lectura != ERROR_LINEA_INVALIDA) {
+
+		if(lectura == LECTURA_CORRECTA) {
 			int conversion = pasar_a_enteros(linea, largo_linea, enteros);
 			if(conversion == ERROR_DE_INPUT) {
 				perror(MENSAJE_INPUT_ERROR);
@@ -103,8 +105,8 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 
 		if((*largo_linea) == (largo_buffer-1)) { // Tengo que agrandar mi memoria.
 			largo_buffer +=10; // Voy agregando de a 10 lugares. 
-			(*linea) = (char*) realloc((*linea), sizeof(char) * largo_buffer); // Re ubico en la memoria.
-			if( (*linea) == NULL) {
+			char* linea_nueva = realloc((*linea), sizeof(char) * largo_buffer); // Re ubico en la memoria.
+			if(linea_nueva == NULL) {
 				return ERROR_DE_MEMORIA;
 			}
 		}
@@ -123,6 +125,7 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 		}
 		(*linea) [ (*largo_linea) ] = (char) caracter; //Lo guardo en el linea.
 		(*largo_linea)+=1; // Incremento mi tope.
+		(*linea) [ (*largo_linea) ] = '\0';
 
 	}
 
@@ -130,11 +133,14 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 		return ERROR_LINEA_INVALIDA;
 	}
 
-	if(caracter == EOF || (*largo_linea) <=1) { // Siempre va a leer por lo menos un caracter, sea eof o fin de linea
-		return FIN_DE_ARCHIVO;
+	if((*largo_linea) <=1) { // Siempre va a leer por lo menos un caracter, sea eof o fin de linea
+		if (caracter == EOF)
+			return FIN_DE_ARCHIVO;
+		return LINEA_VACIA;
 	}
 
-	return 0;
+
+	return LECTURA_CORRECTA;
 	
 }
 
