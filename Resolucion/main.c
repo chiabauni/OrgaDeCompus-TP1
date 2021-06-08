@@ -20,22 +20,22 @@ int main(int argc, char** argv){
 	char estandar[] = "-";
 
 	static struct option long_options[] = {
-        {COMANDO_VERSION_LARGO,      no_argument,       NULL, COMANDO_VERSION_CORTO },
-        {COMANDO_AYUDA_LARGO,         no_argument,       NULL,  COMANDO_AYUDA_CORTO },
-        {COMANDO_INPUT_LARGO,    required_argument,     NULL,  COMANDO_INPUT_CORTO },
-        {COMANDO_OUTPUT_LARGO,   required_argument,     NULL,  COMANDO_OUTPUT_CORTO },
-        {NULL,           0,                     NULL,    0 }
-    };
+		{COMANDO_VERSION_LARGO,      no_argument,       NULL, COMANDO_VERSION_CORTO },
+		{COMANDO_AYUDA_LARGO,         no_argument,       NULL,  COMANDO_AYUDA_CORTO },
+		{COMANDO_INPUT_LARGO,    required_argument,     NULL,  COMANDO_INPUT_CORTO },
+		{COMANDO_OUTPUT_LARGO,   required_argument,     NULL,  COMANDO_OUTPUT_CORTO },
+		{NULL,           0,                     NULL,    0 }
+	};
 
 
 	while ( (opt = getopt_long(argc, argv,"Vhi:o:", 
-                   long_options, &long_index )) != -1) {
-        switch (opt) {
-            case COMANDO_VERSION_CORTO :
-             	return mostrar_en_pantalla(RUTA_VERSION);
-	        case COMANDO_AYUDA_CORTO :
-             	return mostrar_en_pantalla(RUTA_AYUDA);
-            case COMANDO_INPUT_CORTO :
+		long_options, &long_index )) != -1) {
+		switch (opt) {
+			case COMANDO_VERSION_CORTO :
+				return mostrar_en_pantalla(RUTA_VERSION);
+			case COMANDO_AYUDA_CORTO :
+				return mostrar_en_pantalla(RUTA_AYUDA);
+			case COMANDO_INPUT_CORTO :
 				if (strcmp(optarg, estandar)) {
 					stream_entrada = fopen(optarg, "r");
 					if(stream_entrada == NULL){
@@ -46,8 +46,8 @@ int main(int argc, char** argv){
 						return ERROR;
 					}
 				}
-            	break;
-            case COMANDO_OUTPUT_CORTO :
+				break;
+			case COMANDO_OUTPUT_CORTO :
 				if (strcmp(optarg, estandar)) {
 					stream_salida = fopen(optarg, "w");
 					if(stream_salida == NULL){
@@ -58,16 +58,16 @@ int main(int argc, char** argv){
 						return ERROR;
 					}
 				}
-                break;
-            default:
-            	perror(MENSAJE_COMANDO_INVALIDO_ERROR); 
-            	return ERROR;
-        }
-    }
+				break;
+			default:
+				perror(MENSAJE_COMANDO_INVALIDO_ERROR); 
+				return ERROR;
+		}
+	}
 
-    // Caso en que se usa la entrada/salida estandar.
-    if(stream_entrada == NULL ) stream_entrada = stdin;
-    if(stream_salida == NULL ) stream_salida = stdout;
+	// Caso en que se usa la entrada/salida estandar.
+	if(stream_entrada == NULL ) stream_entrada = stdin;
+	if(stream_salida == NULL ) stream_salida = stdout;
 
 	flag_divisor = procesar_archivos(stream_entrada, stream_salida);
 

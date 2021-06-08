@@ -25,10 +25,10 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 
 	while(lectura == 0) {
 		if((largo_arreglo) == (largo_buffer-1)) { // Tengo que agrandar mi memoria.
-	     	 	
+
 			largo_buffer += 10; //Voy agregando de a 10 lugares. 
 			arreglo_structs = realloc(arreglo_structs, sizeof(struct gcd) * largo_buffer); // Re ubico en la memoria.
-	      		
+
 			if((arreglo_structs) == NULL) {
 				perror(MENSAJE_MEM_DINAMICA_ERROR);
 				free(arreglo_structs);
@@ -73,7 +73,7 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 		free(arreglo_structs);
 		return ERROR_LINEA_INVALIDA;
 	}
-    
+
 	euclides(arreglo_structs, largo_arreglo);
 
 	if(imprimir_salida(arreglo_structs, largo_arreglo, salida)) {
@@ -101,28 +101,28 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 
 	while ((caracter != EOL ) && (caracter != EOF)) {
 
-	    	if((*largo_linea) == (largo_buffer-1)) { // Tengo que agrandar mi memoria.
+		if((*largo_linea) == (largo_buffer-1)) { // Tengo que agrandar mi memoria.
 			largo_buffer +=10; // Voy agregando de a 10 lugares. 
 			(*linea) = (char*) realloc((*linea), sizeof(char) * largo_buffer); // Re ubico en la memoria.
-	      		if( (*linea) == NULL) {
+			if( (*linea) == NULL) {
 				return ERROR_DE_MEMORIA;
 			}
-	    	}
+		}
 
-	    	caracter = getc(stream); // Leo un caracter del stream.
-	    	if(ferror(stream)) {
-	    		return ERROR_LINEA_INVALIDA;
-	    	}
+		caracter = getc(stream); // Leo un caracter del stream.
+		if(ferror(stream)) {
+			return ERROR_LINEA_INVALIDA;
+		}
 
 		primer_numero_leido |= (es_numerico(caracter));
 		separador_leido |= (primer_numero_leido && caracter == SEPARADOR);
 		segundo_numero_leido |= (separador_leido && es_numerico(caracter));
 
-	    	if(es_caracter_invalido(caracter)) {
+		if(es_caracter_invalido(caracter)) {
 			return ERROR_LINEA_INVALIDA; // Si lee un caracter que no corresponde, devuelve linea invalida.	
-	    	}
-	    	(*linea) [ (*largo_linea) ] = (char) caracter; //Lo guardo en el linea.
-	    	(*largo_linea)+=1; // Incremento mi tope.
+		}
+		(*linea) [ (*largo_linea) ] = (char) caracter; //Lo guardo en el linea.
+		(*largo_linea)+=1; // Incremento mi tope.
 
 	}
 
@@ -135,16 +135,16 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 	}
 
 	return 0;
-		
+	
 }
 
 int pasar_a_enteros(char* linea, int largo_linea, int *enteros) {
 	char temporal [largo_linea];
 	char caracter = 'A';
- 	int largo_enteros = 0;
+	int largo_enteros = 0;
 
 	int i = 0;
- 	int j = 0;
+	int j = 0;
 
 	while(i < largo_linea) {
 		caracter = linea[i]; i++;
