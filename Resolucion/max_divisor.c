@@ -35,6 +35,8 @@ int procesar_archivos(FILE* entrada, FILE* salida) {
 				perror(MENSAJE_MEM_DINAMICA_ERROR);
 				free(arreglo_structs);
 				return ERROR_DE_MEMORIA;
+			} else {
+				arreglo_structs = arreglo_nuevo;
 			}
 		}
 
@@ -108,6 +110,8 @@ int leer_linea(FILE* stream, int *largo_linea, char** linea) {
 			char* linea_nueva = realloc((*linea), sizeof(char) * largo_buffer); // Re ubico en la memoria.
 			if(linea_nueva == NULL) {
 				return ERROR_DE_MEMORIA;
+			} else {
+				*linea = linea_nueva;
 			}
 		}
 
